@@ -62,4 +62,61 @@ catch(error)
     alert('city not found');
 }
 };
+window.addEventListener( "load",()=>{
+let long;
+let lat;
+if(navigator.geolocation)
+{
+    navigator.geolocation.getCurrentPosition((position)=>
+    {
+    long=position.coords.longitude;
+    lat=position.coords.latitude;
+    const proxy="https://cors-anywhere.herokuapp.com/";
+        const api=`${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=dab3af44de7d24ae7ff86549334e45bd     `
+        fetch(api).then((response)=>{
+
+            return response.json();
+        })
+             .then (data =>
+            {
+                    const{name}=data;
+                    const{feels_like}=data.main;
+                    const{id,main}=data.weather[0];
+loc.textContent=name;
+                    climate.textContent=main;
+                    tempvalue.textContent=Math.round(feels_like-273);
+                  /*  if(id<300&&id>200)
+                    {
+                        tempicon.src="./icons/11n.png"
+                    }
+                    else if(id<400&&id>300)
+                    {
+                        tempicon.src="./icons/04d.png"
+                    }
+                    else if(id<600&&id>500)
+                    {
+                        tempicon.src="./icons/09n.png"
+                    }
+                    else if(id<700&&id>600)
+                    {
+                        tempicon.src="./icons/13d.png"
+                    }
+                    else if(id<800&&id>700)
+                    {
+                        tempicon.src="./icons/50d.png"
+                    }
+                    else if(id==800)
+                    {
+                        tempicon.src="./icons/01d.png"
+        
+                    }
+                    else if(id>800)
+                    {
+                        tempicon.src="./icons/03d.png"
+                    }*/
+  console.log(data);
+ })
+}
+    )}
+})
 
